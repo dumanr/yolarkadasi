@@ -1,14 +1,14 @@
 <template>
   <div class="header">
     <div class="container">
-        <img alt="Vue logo" src="../assets/logo.png">
+        <img @click="anasayfaAc()" class="header-logo" alt="YolArkadaşı" src="../assets/logo.png">
         <nav class="top-menu">
             <ul>
-                <li><a @click="anasayfaAc()">Anasayfa</a></li>
-                <li><a @click="yolculukAc()">Yolculuk Ara</a></li>
-                <li><a @click="ilanverAc()">İlan Ver</a></li>
-                <li v-if="!this.$store.getters.getOturum"><a @click="UyegirisiAc()">Giris</a></li>
-                <li v-if="this.$store.getters.getOturum"><a @click="profilAc()">Profil</a></li>
+                <li><a @click="anasayfaAc()"><i class="fas fa-home"></i>Anasayfa</a></li>
+                <li><a @click="yolculukAc()"><i class="fas fa-search"></i>Yolculuk Ara</a></li>
+                <li><a @click="ilanverAc()"><i class="fas fa-plus"></i>İlan Ver</a></li>
+                <li v-if="!this.$store.getters.getOturum"><a @click="UyegirisiAc()"><i class="fas fa-sign-in-alt"></i>Giris</a></li>
+                <li v-if="this.$store.getters.getOturum"><a @click="profilAc()"><i class="far fa-user-circle"></i>Profil</a></li>
             </ul>
         </nav>
     </div>
@@ -40,17 +40,29 @@ export default {
 
 <style scoped>
 .header {
-    border-bottom: 1px solid #808080;
+    border-bottom: 1px solid #efefef;
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
 }
 .header .container {
+    display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+.header-logo {
+    height: 32px;
+    cursor: pointer;
 }
 .top-menu ul {
     display: flex;
 }
 .top-menu ul li {
-    margin-left: 10px;
-    padding-left: 10px;
-    border-left: 1px solid #4b4b4b;
+    margin-left: 24px;
+    font-weight: bold;
+}
+.top-menu ul li svg {
+    margin-right: 8px;
 }
 </style>

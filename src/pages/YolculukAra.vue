@@ -1,6 +1,6 @@
 <template>
    <div class="yolculukara">
-       Yolculuk Ara
+        <h2 class="page-title">Yolculuk Ara</h2>
    </div>
 </template>
 

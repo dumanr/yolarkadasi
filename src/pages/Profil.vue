@@ -1,6 +1,6 @@
 <template>
   <div class="profil">
-    Profil sayfası
+    <h2 class="page-title">Hesabım</h2>
 
     {{ this.$store.getters.getOturumKullanici }}
 

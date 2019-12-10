@@ -29,7 +29,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log(to);
+  /* console.log(to); */
   if(to.path == "/profil" && !store.getters.getOturum) {
     next('/giris');
   }

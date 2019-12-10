@@ -8,6 +8,13 @@ import { fbauth } from './firebaseConfig'
 
 Vue.config.productionTip = false
 
+require('./assets/fontawesome/all.min.css');
+require('./assets/fontawesome/all.min.js');
+
+/* 
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnVDU9EzE97SdgtZLm3v7L7AT26CuC1xI&libraries=places"></script>
+*/
+
 new Vue({
   render: function (h) { return h(SplashScreen) }
 }).$mount('#app');

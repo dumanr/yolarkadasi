@@ -1,6 +1,6 @@
 <template>
   <div class="anasayfa">
-      Anasayfa asdasdsd
+    <h2 class="page-title">Anasayfa</h2>
   </div>
 </template>
 

@@ -1,20 +1,17 @@
 <template>
   <div class="uyegirisi">
-       
-       <div class="uye-giris">
+    <h2 class="page-title">Kayıt Ol veya Giriş yap</h2>
 
-            <input type="email" v-model="email" placeholder="Email adresiniz">
-            <input type="password" v-model="password" placeholder="Şifreniz">
-            <button @click="kayitYap()">Kayıt Ol</button>
-            <button @click="girisYap()">Giriş Yap</button>
-
-            <br><br>
-            <button @click="googleGiris()">Google ile giris yap</button>
-            <hr>
-            {{this.$store.getters.getOturum}}
-
-       </div>
-       
+    <div class="uye-giris">
+        <input type="email" v-model="email" placeholder="Email adresiniz">
+        <input type="password" v-model="password" placeholder="Şifreniz">
+        <button @click="kayitYap()">Kayıt Ol</button>
+        <button @click="girisYap()">Giriş Yap</button>
+        <br><br>
+        <button @click="googleGiris()">Google ile giris yap</button>
+        <hr>
+        {{this.$store.getters.getOturum}}
+    </div>
    </div>
 </template>
 
@@ -45,6 +42,7 @@ export default {
                 console.log('createUserWithEmailAndPassword',res);
                 this.kullanici = res.user;
                 this.$store.dispatch('oturumAc', res.user);
+                this.returnPageCtrl();
             }).catch(err=>alert(err.message));
         },
         girisYap(){
@@ -52,6 +50,7 @@ export default {
                 console.log('signInWithEmailAndPassword', res);
                 this.kullanici = res.user;
                 this.$store.dispatch('oturumAc', res.user);
+                this.returnPageCtrl();
             }).catch(err=>alert(err.message));
         },
         googleGiris(){
@@ -62,9 +61,15 @@ export default {
                 var user = res.user;
                 this.kullanici = user;
                 this.$store.dispatch('oturumAc', user);
+                this.returnPageCtrl();
             }).catch(err=>{
                 alert(err.message);
             });
+        },
+        returnPageCtrl(){
+            console.log('âsdasdasdasd', this.$route.query.returnPage);
+            if(this.$route.query.returnPage != null)
+                this.$router.push(this.$route.query.returnPage);
         }
     }
 
