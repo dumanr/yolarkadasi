@@ -10,7 +10,7 @@
             
             <div class="form-box">
               <h2>Kalkış, varış noktaları ve saati seçin</h2>
-              <div class="ilan-form">
+              <div class="form ilan-form">
                 <label for="nereden_input"><span><i class="fas fa-map-marker"></i></span>Nereden yola çıkacaksın?</label>
                 <input v-model="formData.nereden" id="nereden_input" type="text" placeholder="Nereden" />
                 <label for="nereye_input"><span><i class="fas fa-map-marker-alt"></i></span>Nereye gideceksin?</label>
@@ -42,7 +42,7 @@
 
             <div class="form-box">
               <h2>Yolculuk özellikleri</h2>
-              <div class="ilan-form">
+              <div class="form ilan-form">
                 
                 <div class="form-input-line-multi">
                   <div>
@@ -60,7 +60,7 @@
             <div class="clear"></div>
 
             <div class="form-box">
-              <div class="ilan-form">
+              <div class="form ilan-form">
                 
                 <div class="form-input-line-multi">
                   <div>
@@ -80,12 +80,11 @@
 
             <div class="form-box">
               <h2>Daha fazla bilgi</h2>
-              <div class="ilan-form">
+              <div class="form ilan-form">
                 <label for="ekstrabilgi_input">Yolculuğunla ilgili eklemek istediğin bir şey var mı?</label>
                 <textarea v-model="formData.ekstraBilgi" placeholder="Buluşma yeri ve saati konusunda esnek misin? Bagajında fazla yer yok mu? Yolcularını haberdar et."></textarea>
               </div>
             </div>
-
 
             <div class="clear"></div>
 
@@ -135,7 +134,7 @@ export default {
           zoom: 4
         }); */
         console.log(this.$refs.ilanver_map);
-      });      
+      });
     },
     methods : {
       oturumAc(){
@@ -160,71 +159,7 @@ export default {
   height:300px;
   width: 100%;
 }
-.form-box {
-  border: 1px solid #ddd;
-  background: #EDEDED;
-  border-radius: 3px;
-  padding: 17px;
-  margin-right: 20px;
-}
-.form-box h2 {
-  border-bottom: 1px solid #ddd;
-  line-height: 39px;
-  margin: -17px -17px 17px -17px;
-  padding: 0 0 0 17px;
-  font-size: 18px;
-  font-weight: normal;
-  background-color: #fff;
-}
 
-.ilan-form {
-  display: flex;
-  flex-direction: column;
-}
-.ilan-form input, .ilan-form textarea {
-  border: 1px solid #ddd;
-  padding: 4px;
-  height: 28px;
-  line-height: 21px;
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-  transition: border linear .2s,box-shadow linear .2s;
-  margin-bottom: 20px;
-  padding-left: 34px;
-}
-.ilan-form label {
-  position: relative;
-  font-size: 14px;
-  margin-bottom: 5px;
-}
-.ilan-form label span {
-  position: absolute;
-  bottom: -32px;
-  left: 10px;
-}
-.ilan-form input:focus {
-  border-color: rgba(0,175,245,0.8);
-  box-shadow: inset 0 1px 1px rgba(5,71,82,0.075), 0 0 8px rgba(0,175,245,0.6);
-}
-.ilan-form .form-input-line-multi {
-  display: flex;
-}
-.ilan-form .form-input-line-multi div {
-  flex: 0 1 80%;
-  display: flex;
-  flex-direction: column;
-}
-.ilan-form .form-input-line-multi div:last-child {
-  flex: 0 1 20%;
-  margin-left: 10px;
-}
-.ilan-form textarea {
-  min-height: 70px;
-  padding: 10px;
-  font-size: 14px;
-  font-weight: normal;
-  line-height: 18px;
-  font-family: inherit;
-}
 .number-input {
   text-align: right;
   max-width: 120px;

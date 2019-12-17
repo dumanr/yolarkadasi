@@ -1,25 +1,21 @@
 import { fbauth } from '../firebaseConfig'
 
-/* console.log('str', fbauth.currentUser);
- */
-
 const authStore = {
     state: {
         oturum: false,
-        oturumKullanici: null,
+        oturumFBuserData: null,
     },
     getters: {
         getOturum(state) {
-            console.log('getters', state);
             return state.oturum;
         },
         getOturumKullanici(state) {
-            return state.oturumKullanici;
+            return state.oturumFBuserData;
         }
     },
     mutations: {
         setKullanici(state, kullanici){
-            state.oturumKullanici = kullanici;
+            state.oturumFBuserData = kullanici;
         },
         setOturum(state, _oturum){
             state.oturum = _oturum;
