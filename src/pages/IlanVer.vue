@@ -94,6 +94,7 @@
           </div><!-- .content-col -->
           <div class="content-col content-col-r">
             <div id="ilanver_map" ref="ilanver_map"></div>
+            
           </div><!-- .content-col -->
         </div>
       </div>

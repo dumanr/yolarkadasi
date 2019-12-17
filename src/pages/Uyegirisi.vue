@@ -3,12 +3,30 @@
     <h2 class="page-title">Kayıt Ol veya Giriş yap</h2>
 
     <div class="uye-giris">
-        <input type="email" v-model="email" placeholder="Email adresiniz">
-        <input type="password" v-model="password" placeholder="Şifreniz">
-        <button @click="kayitYap()">Kayıt Ol</button>
-        <button @click="girisYap()">Giriş Yap</button>
-        <br><br>
-        <button @click="googleGiris()">Google ile giris yap</button>
+       <div class="container container-medium">
+        <div class="page-content">
+            <div class="form-box">
+                <h2>Kayıt Ol</h2>
+                <div class="kayit-form">
+                  <input type="email" v-model="email" placeholder="Email adresiniz">
+                  <input type="password" v-model="password" placeholder="Şifreniz">
+                  <p><button @click="kayitYap()">Kayıt Ol</button></p>
+                </div>
+                <div class="clear"></div>
+                <h2>E-Mail ile Giriş Yap</h2>
+                <div class="giris-form">
+                  <input type="email" v-model="email" placeholder="Email adresiniz">
+                  <input type="password" v-model="password" placeholder="Şifreniz">
+                  <p><button @click="girisYap()">Giriş Yap</button></p>
+                </div>
+                <div class="clear"></div>
+                <h2>Google ile Giriş Yap</h2>
+                <div class="google-giris-form">
+                  <p><button @click="googleGiris()">Google ile giris yap</button></p>
+                </div>
+        </div>
+       </div>
+    </div>
         <hr>
         {{this.$store.getters.getOturum}}
     </div>
@@ -78,13 +96,30 @@ export default {
 
 <style scoped>
 .uye-giris {
-    margin: 0 auto;
+    margin:0 auto;
     padding: 20px;
 }
 .uye-giris input {
     width: 100%;
     margin: 10px;
-    max-width: 300px;
+    max-width: 500px;
 }
-
+.form-box {
+  border: 1px solid #ddd;
+  background: #EDEDED;
+  border-radius: 3px;
+  padding: 20px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+.form-box h2 {
+  border-bottom: 1px solid #ddd;
+  line-height: 39px;
+  margin: -17px -17px 17px -17px;
+  padding: 0 0 0 17px;
+  font-size: 18px;
+  font-weight: normal;
+  background-color: #fff;
+}
 </style>

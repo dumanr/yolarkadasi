@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="splashscreen">
-      Bekleyiniz
+     <h2 class="page-title"> Bekleyiniz</h2>
   </div>
 </template>
 
@@ -12,12 +12,13 @@ export default {
 
 <style>
 .body {
-  background: greenyellow;
+  background: rgba(0,175,245,0.8);;
 }
 .splashscreen {
-  background: greenyellow;
+  background: rgba(0,175,245,0.8);;
   color: black;
   padding: 50px;
+
 }
 
 </style>
