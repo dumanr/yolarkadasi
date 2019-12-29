@@ -117,9 +117,10 @@ export default {
         });
     },
     returnPageCtrl() {
-      console.log("âsdasdasdasd", this.$route.query.returnPage);
       if (this.$route.query.returnPage != null)
         this.$router.push(this.$route.query.returnPage);
+      else
+        this.$router.push('/');
     }
   }
 };

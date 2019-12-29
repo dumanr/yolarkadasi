@@ -1,4 +1,5 @@
 import { fbauth } from '../firebaseConfig'
+import userStore from './user.store'
 
 const authStore = {
     state: {
@@ -22,7 +23,8 @@ const authStore = {
         }
     },
     actions: {
-        oturumAc({commit}, kullanici){
+        oturumAc({commit, dispatch}, kullanici){
+            dispatch('profileData', kullanici.uid); // userStore
             commit('setKullanici', kullanici);
             commit('setOturum', kullanici ? true : false);
         },

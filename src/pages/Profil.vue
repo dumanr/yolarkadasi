@@ -20,6 +20,7 @@ export default {
             fbauth.signOut().then(()=>{
                 this.kullanici = null;
                 this.$store.dispatch('oturumKapat');
+                this.$router.push('/giris');
             });
         }
     }

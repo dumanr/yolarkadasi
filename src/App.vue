@@ -13,11 +13,6 @@ export default {
   name: 'app',
   components: {
     HeaderComp,
-  },
-  created(){
-    fbauth.onAuthStateChanged(auth => {
-      this.$store.dispatch('oturumAc', fbauth.currentUser);
-    });
   }
 }
 </script>
