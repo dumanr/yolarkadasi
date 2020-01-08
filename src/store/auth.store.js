@@ -24,7 +24,8 @@ const authStore = {
     },
     actions: {
         oturumAc({commit, dispatch}, kullanici){
-            dispatch('profileData', kullanici.uid); // userStore
+            if(kullanici)
+                dispatch('profileData', kullanici.uid); // userStore
             commit('setKullanici', kullanici);
             commit('setOturum', kullanici ? true : false);
         },

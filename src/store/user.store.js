@@ -16,10 +16,12 @@ const userStore = {
     },
     actions: {
         async profileData({ commit }, userId) {
-            await db.collection('kullanicilar').doc(userId).get().then((userData) => {
-                commit('setProfileData', userData);
-                return userData;
-            });
+            if(userId)
+                await db.collection('kullanicilar').doc(userId).get().then((userData) => {
+                    commit('setProfileData', userData);
+                    return userData;
+                });
+            else null;
         },
         async sendProfileData({commit}, profileData) {
             await db.collection('kullanicilar').doc(profileData.userId).set(profileData).then(()=>{
