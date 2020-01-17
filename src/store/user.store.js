@@ -24,6 +24,7 @@ const userStore = {
             else null;
         },
         async sendProfileData({commit}, profileData) {
+            console.log('send profile', profileData);
             await db.collection('kullanicilar').doc(profileData.userId).set(profileData).then(()=>{
                 commit('setProfileData', profileData);
                 return profileData;

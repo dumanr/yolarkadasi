@@ -78,23 +78,31 @@ export default {
     this.oturumBilgisi = this.$store.getters.getOturum;
   },
   methods: {
-    kayitYap() {
-      fbauth
-        .createUserWithEmailAndPassword(this.email, this.password)
-        .then(res => {
-          console.log("createUserWithEmailAndPassword", res);
-          this.kullanici = res.user;
-          this.$store.dispatch("oturumAc", res.user);
-          this.returnPageCtrl();
-        })
-        .catch(err => alert(err.message));
-    },
     girisYap() {
       fbauth
         .signInWithEmailAndPassword(this.email, this.password)
         .then(res => {
           console.log("signInWithEmailAndPassword", res);
           this.kullanici = res.user;
+          this.$store.dispatch("oturumAc", res.user);
+          this.returnPageCtrl();
+        })
+        .catch(err => alert(err.message));
+    },
+    kayitYap() {
+      fbauth
+        .createUserWithEmailAndPassword(this.email, this.password)
+        .then(res => {
+          console.log("createUserWithEmailAndPassword", res);
+          this.kullanici = res.user;
+          this.isNewUserSaveData(res, {
+            'userId': res.user.uid,
+            'name': null,
+            'surname': null,
+            'email': res.user.email,
+            'photoURL': res.user.photoURL,
+            'provider': res.additionalUserInfo.providerId,
+          });
           this.$store.dispatch("oturumAc", res.user);
           this.returnPageCtrl();
         })
@@ -109,6 +117,14 @@ export default {
           var token = res.credential.accessToken;
           var user = res.user;
           this.kullanici = user;
+          this.isNewUserSaveData(res, {
+            'userId': res.user.uid,
+            'name': res.additionalUserInfo.profile.given_name,
+            'surname': res.additionalUserInfo.profile.family_name,
+            'email': res.user.email,
+            'photoURL': res.user.photoURL,
+            'provider': res.additionalUserInfo.providerId,
+          });
           this.$store.dispatch("oturumAc", user);
           this.returnPageCtrl();
         })
@@ -121,6 +137,11 @@ export default {
         this.$router.push(this.$route.query.returnPage);
       else
         this.$router.push('/');
+    },
+    isNewUserSaveData(res, profileData){
+      if(res.additionalUserInfo.isNewUser){
+        this.$store.dispatch("sendProfileData", profileData);
+      }
     }
   }
 };

@@ -87,8 +87,11 @@
             </div>
 
             <div class="clear"></div>
-
+            <br>
             <button @click="formGonder()">Gönder</button>
+            <br>
+            <div class="clear"></div>
+            <br>
 
           </div><!-- .content-col -->
           <div class="content-col content-col-r">
@@ -122,10 +125,12 @@ export default {
           fiyat: null,
           koltukSayisi: null,
           ekstraBilgi: null,
+          ilanSahibiId: null,
         },
       }
     },
     mounted(){
+      this.formData.ilanSahibiId = fbauth.currentUser.uid;
       this.user = fbauth.currentUser;
       this.$nextTick(() => {
         /* var ilanVerMap = new google.maps.Map(this.$refs.ilanver_map, {
@@ -142,6 +147,17 @@ export default {
       },
       formGonder(){
         console.log('form', this.formData);
+        if(this.formData.nereden && this.formData.nereye && this.formData.tarihGidis && this.formData.tarihDonus && this.formData.tarihGidisSaat && this.formData.tarihDonusSaat && this.formData.fiyat && this.formData.koltukSayisi) {
+          if(this.formData.ilanSahibiId){
+            this.$store.dispatch("addPayloadData", this.formData);
+            this.$router.push('/ara');
+          } else {
+            alert('lütfen oturum açtığınızdan emin olun');
+          }         
+        } else {
+          alert('Lütfen bilgileri dikkatlice doldurunuz');
+        }
+
         /* if(!this.formData.nereden || !this.formData.nereye || !this.formData.tarihGidis || !this.formData.tarihGidisSaat) {
           alert('Formu tam giriniz');
           return;
