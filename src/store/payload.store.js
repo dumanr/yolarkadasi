@@ -11,6 +11,7 @@ const payloadStore = {
     },
     mutations: {
         setList(state, list) {
+            state.payloadList = [];
             state.payloadList = list;
         },
         addList(state, payload){
@@ -24,13 +25,13 @@ const payloadStore = {
                 return payload;
             });
         },
-        async getPayloadData({commit}, id){
+        async getPayloadData({commit}){
             await db.collection('ilanlar').get().then((payloadList)=>{
+                payloadList = payloadList.docs.map(doc=>doc.data());
                 commit('setList', payloadList);
                 return payloadList;
             });
         }
-
     }
 };
 

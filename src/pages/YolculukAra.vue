@@ -19,10 +19,10 @@ export default {
     };
   },
   methods: {},
-  mounted() {
-      this.ilanList = this.$store.getters.getPayloadList;
-      console.log(this.ilanList);
-  }
+  created(){
+    this.$store.dispatch("getPayloadData");
+    this.ilanList = this.$store.getters.getPayloadList;
+  },
 };
 </script>
 
