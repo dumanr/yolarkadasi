@@ -17,8 +17,10 @@ export default {
 .splashscreen {
   background: rgba(0,175,245,0.8);;
   color: black;
-  padding: 50px;
-
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 </style>

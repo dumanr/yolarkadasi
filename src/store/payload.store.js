@@ -39,6 +39,25 @@ const payloadStore = {
             await db.collection('ilanlar').doc(ilanId).delete().then(()=>{
                 return 1;
             });
+        },
+        async getReservations({}, ilanId){
+            return await db.collection('ilanlar').doc(ilanId).collection('yolcular').get().then(res=>{
+                return res.docs.map(m=>{
+                    let d = m.data();
+                    d.id = m.id;
+                    console.log(d);
+                    return d;
+                });
+            });
+        },
+        async addReservation({commit}, payload){
+            return await db.collection('ilanlar').doc(payload.ilanId).collection('yolcular').add({
+                kullaniciId: payload.kullaniciId
+            });
+        },
+        async deleteReservation({commit}, payload) {
+            return await db.collection('ilanlar').doc(payload.ilanId)
+                .collection('yolcular').doc(payload.parentKey).delete();
         }
     }
 };

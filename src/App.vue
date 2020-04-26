@@ -2,17 +2,20 @@
   <div id="app">
     <HeaderComp />
     <router-view></router-view>
+    <FooterComp />
   </div>
 </template>
 
 <script>
 import HeaderComp from './components/HeaderComp.vue'
+import FooterComp from './components/FooterComp.vue'
 import {fbauth} from './firebaseConfig'
 
 export default {
   name: 'app',
   components: {
     HeaderComp,
+    FooterComp
   }
 }
 </script>
@@ -83,7 +86,7 @@ input, textarea {
   flex: 0 1 auto;
 }
 .content-col-l { flex: 0 1 65% !important; }
-.content-col-r { flex: 0 1 35% !important; border-left: 1px solid #dfdfdf; }
+.content-col-r { flex: 0 1 35% !important; border-left: 1px solid #dfdfdf; padding-left: 20px; }
 
 /**/
 .form-box {
