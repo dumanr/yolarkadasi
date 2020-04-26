@@ -32,6 +32,9 @@ const userStore = {
         },
         async getOneProfileData({}, userId){
             return await db.collection('kullanicilar').doc(userId).get();
+        },
+        async setPuan({}, payload){
+            return await db.collection('kullanicilar').doc(payload.userId).update({ puan: payload.puan });
         }
     }
 };

@@ -102,6 +102,7 @@ export default {
             'email': res.user.email,
             'photoURL': res.user.photoURL,
             'provider': res.additionalUserInfo.providerId,
+            'puan': 5,
           });
           this.$store.dispatch("oturumAc", res.user);
           this.returnPageCtrl();
@@ -124,6 +125,7 @@ export default {
             'email': res.user.email,
             'photoURL': res.user.photoURL,
             'provider': res.additionalUserInfo.providerId,
+            'puan': 5,
           });
           this.$store.dispatch("oturumAc", user);
           this.returnPageCtrl();

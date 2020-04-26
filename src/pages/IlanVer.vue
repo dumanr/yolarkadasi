@@ -110,10 +110,21 @@
                 </div>
               </div><!-- .profile-card -->
 
+              <div class="puan-ver" v-if="mevcutKullaniciYolcuMu">
+                Lütfen Yolculuğunuzu Puanlayınız:
+                <select @change="puanla">
+                  <option value="5">Çok Güzel Yolculuktu</option>
+                  <option value="4">Güzel Yolculuktu </option>
+                  <option value="3">Normal Yolculuktu</option>
+                  <option value="2">Kötüydü</option>
+                  <option value="1">Sakın Denemeyin</option>
+                </select>
+              </div>
 
               <div v-for="(yolcu, j) in yolcular" :key="j" class="profile-card">
                 <div class="profile-card-avatar yolcu-avatar">
-                  <img :src="yolcu.photoURL" />
+                  <img v-if="yolcu.photoURL" :src="yolcu.photoURL" />
+                  <img v-else src="../assets/no-avatar.png" />
                 </div>
                 <div class="profile-card-body">
                   <p><b>{{ yolcu.name }} {{ yolcu.surname }}</b></p>
@@ -121,7 +132,7 @@
                 <button v-if="yolcu.userId == currentUser.uid" @click="yolcuKaldir(yolcu)" style="margin-left:5px;"><i class="fas fa-trash-alt"></i></button>
               </div><!-- .profile-card -->
 
-              <button v-if="ilanDetay && yolcular.length < formData.koltukSayisi" @click="yolculugaKatil()" class="btn-katil">
+              <button v-if="!mevcutKullaniciYolcuMu && ilanDetay && yolcular.length < formData.koltukSayisi" @click="yolculugaKatil()" class="btn-katil">
                 YOLCULUĞA KATIL <i class="far fa-check-circle"></i>
               </button>
               <h3 v-if="ilanDetay && yolcular.length >= formData.koltukSayisi" style="text-align:center;">Malesef yolcu kapasitesi dolmuştur.</h3>
@@ -163,6 +174,7 @@ export default {
         ilanDetay:false,
         ilanGuncelle:false,
         yolcular:[],
+        mevcutKullaniciYolcuMu:false,
       }
     },
     mounted(){
@@ -184,6 +196,9 @@ export default {
         
         this.$store.dispatch("getReservations", this.ilanId).then(list=>{
           list.forEach(element => {
+            if(element.kullaniciId == this.currentUser.uid){
+              this.mevcutKullaniciYolcuMu = true;
+            }
             this.$store.dispatch("getOneProfileData", element.kullaniciId).then(u=>{
               if(u.data().userId){
                 let udata = u.data();
@@ -227,6 +242,16 @@ export default {
             this.$router.push('/ara');
           });
         }
+      },
+      puanla(e){
+        var puan = e.target.value;
+        console.log(puan, this.selectedIlanSahibi.userId);
+        this.$store.dispatch("setPuan", {
+          userId: this.selectedIlanSahibi.userId,
+          puan: parseInt(puan),
+        }).then(()=>{
+          alert('Puanınız alınmıştır');
+        });
       },
       yolculugaKatil(){
         this.$store.dispatch("addReservation", {
@@ -310,5 +335,11 @@ export default {
   height: 54px;
   width: 100%;
   border-radius: 15px;
+}
+.puan-ver select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 1em;
 }
 </style>

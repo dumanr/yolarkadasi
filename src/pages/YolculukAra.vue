@@ -2,14 +2,25 @@
   <div class="yolculukara">
     <h2 class="page-title">Yolculuk Ara</h2>
 
-    <div v-for="(ilan, index) in ilanList" :key="index">
+    <div class="search-box">
+      <input v-model="inputNereden" type="text" placeholder="Nereden">
+      <input v-model="inputNereye" type="text" placeholder="Nereye">
+    </div>
+
+
+    <div v-for="(ilan, index) in filteredList" :key="index">
       <div class="ilan-card" @click="detailIlan(ilan)">
         <div v-if="ilan.user" class="card-left">
           <div class="ilan-card-avatar">
-            <img :src="ilan.user.photoURL" />
+            <img v-if="ilan.user.photoURL" :src="ilan.user.photoURL" />
+            <img v-else src="../assets/no-avatar.png" />
           </div>
           <h4>{{ ilan.user.name }} {{ ilan.user.surname }}</h4>
           <h5>{{ ilan.user.marka }}</h5>
+          <span class="yildizlar">
+            <i v-for="(p,k) in ilan.user.puan" :key="k" class="fas fa-star"></i>
+            <i v-for="(p,k) in 5 - ilan.user.puan" :key="k" class="far fa-star"></i>
+          </span>
         </div>
         <div class="card-right">
           <h2>
@@ -50,7 +61,9 @@ export default {
   name: "YolculukAra",
   data: () => {
     return {
-      ilanList: []
+      ilanList: [],
+      inputNereden: '',
+      inputNereye: ''
     };
   },
   methods: {
@@ -59,11 +72,13 @@ export default {
     },
     detailIlan(ilan){
       this.$router.push('/ilanver/' + ilan.id);
-    }
+    },
   },
-  watch: {
-    getList(newVal, oldVal) {
-      console.log(newVal, oldVal);
+  computed: {
+    filteredList() {
+      return this.ilanList.filter(post => {
+        return post.nereden.toLowerCase().includes(this.inputNereden.toLowerCase()) && post.nereye.toLowerCase().includes(this.inputNereye.toLowerCase());
+      });
     }
   },
   mounted() {
@@ -150,5 +165,23 @@ export default {
 .card-right p {
   margin:3px 0 0 0;
   color:gray;
+}
+.search-box {
+  display: flex;
+  max-width: 500px;
+  margin: 0 auto;
+  width: 100%;
+}
+.search-box input {
+  width: 50%;
+  padding: 10px;
+  font-weight: 900;
+  font-family: inherit;
+  margin: 5px;
+  border: 2px solid rgb(226, 226, 226);
+  border-radius: 10px;
+}
+.search-box input:focus {
+  outline: 0;
 }
 </style>
