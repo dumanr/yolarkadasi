@@ -18,6 +18,9 @@ const routes = [
       return import(/* webpackChunkName: "ilanver" */ '../pages/IlanVer.vue')
     }
   },
+  { path: '/ilanver/:ilanId', component: function () {
+    return import(/* webpackChunkName: "ilanver" */ '../pages/IlanVer.vue')
+  }, props: true },
   { path: '/profil', name: 'Profil', component: Profil },
 ]
 

@@ -27,9 +27,17 @@ const payloadStore = {
         },
         async getPayloadData({commit}){
             await db.collection('ilanlar').get().then((payloadList)=>{
-                payloadList = payloadList.docs.map(doc=>doc.data());
+                payloadList = payloadList.docs.map(doc=> {
+                    var data = doc.data();
+                    data.id = doc.id;
+                    return data;
+                });
                 commit('setList', payloadList);
-                return payloadList;
+            });
+        },
+        async deletePayloadData({commit}, ilanId){
+            await db.collection('ilanlar').doc(ilanId).delete().then(()=>{
+                return 1;
             });
         }
     }

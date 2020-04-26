@@ -1,15 +1,16 @@
 <template>
   <div class="ilanver">
-    <h2 class="page-title">Yolculuk ilanı ver</h2>
+    <h2 v-if="ilanId && formData.nereden && currentUser.uid != formData.ilanSahibiId" class="page-title">Yolculuk ilanı Detay</h2>
+    <h2 v-else-if="ilanId && currentUser.uid == formData.ilanSahibiId" class="page-title">Yolculuk ilanı Güncelle</h2>
+    <h2 v-else class="page-title">Yolculuk ilanı Ver</h2>
 
-
-    <div v-if="user">
+    <div v-if="currentUser">
       <div class="container container-medium">
         <div class="page-content">
           <div class="content-col content-col-l">
             
             <div class="form-box">
-              <h2>Kalkış, varış noktaları ve saati seçin</h2>
+              <h2>Kalkış, varış noktaları ve saati</h2>
               <div class="form ilan-form">
                 <label for="nereden_input"><span><i class="fas fa-map-marker"></i></span>Nereden yola çıkacaksın?</label>
                 <input v-model="formData.nereden" id="nereden_input" type="text" placeholder="Nereden" />
@@ -88,15 +89,27 @@
 
             <div class="clear"></div>
             <br>
-            <button @click="formGonder()">Gönder</button>
+            <button @click="formGonder()">Kaydet</button>
+            <button v-if="ilanId && currentUser.uid == formData.ilanSahibiId" @click="ilanSil()" style="float:right; margin-right:20px;">Sil</button>
             <br>
+
             <div class="clear"></div>
             <br>
 
           </div><!-- .content-col -->
           <div class="content-col content-col-r">
-            <div id="ilanver_map" ref="ilanver_map"></div>
+            <!-- <div id="ilanver_map" ref="ilanver_map"></div> -->
             
+            <div v-if="selectedIlanSahibi" class="profile-card">
+              <div class="profile-card-avatar">
+                <img :src="selectedIlanSahibi.photoURL" />
+              </div>
+              <div class="profile-card-body">
+                <p><b>{{ selectedIlanSahibi.name }} {{ selectedIlanSahibi.surname }}</b></p>
+                <p>{{ selectedIlanSahibi.email }}</p>
+              </div>
+            </div><!-- .profile-card -->
+
           </div><!-- .content-col -->
         </div>
       </div>
@@ -112,9 +125,10 @@
 import { fbauth, db } from "./../firebaseConfig";
 export default {
     name : 'IlanVer',
+    props: ['ilanId'],
     data: () => {
       return {
-        user: null,
+        currentUser: null,
         formData: {
           nereden: null,
           nereye: null,
@@ -127,18 +141,29 @@ export default {
           ekstraBilgi: null,
           ilanSahibiId: null,
         },
+        selectedIlanSahibi: null
       }
     },
     mounted(){
-      this.formData.ilanSahibiId = fbauth.currentUser.uid;
-      this.user = fbauth.currentUser;
+      this.currentUser = fbauth.currentUser;
+      var selectedIlan = this.$store.getters.getPayloadList.filter(f=>f.id == this.ilanId)[0];
+      if(this.ilanId && selectedIlan) {
+        for (const key in this.formData) {
+          if (this.formData.hasOwnProperty(key) && selectedIlan.hasOwnProperty(key)) {
+            this.formData[key] = selectedIlan[key];
+          }
+        }
+        this.selectedIlanSahibi = selectedIlan.user;
+      } else {
+        this.formData.ilanSahibiId = fbauth.currentUser.uid;
+      }
       this.$nextTick(() => {
         /* var ilanVerMap = new google.maps.Map(this.$refs.ilanver_map, {
           center: {lat:61.180059, lng: -149.822075},
           scrollwheel: false,
           zoom: 4
         }); */
-        console.log(this.$refs.ilanver_map);
+        // console.log(this.$refs.ilanver_map);
       });
     },
     methods : {
@@ -157,14 +182,14 @@ export default {
         } else {
           alert('Lütfen bilgileri dikkatlice doldurunuz');
         }
-
-        /* if(!this.formData.nereden || !this.formData.nereye || !this.formData.tarihGidis || !this.formData.tarihGidisSaat) {
-          alert('Formu tam giriniz');
-          return;
+      },
+      ilanSil(){
+        var conf = confirm('Silmek istediğinize eminmisiniz?');
+        if(conf){
+          this.$store.dispatch("deletePayloadData", this.ilanId).then(()=>{
+            this.$router.push('/ara');
+          });
         }
-        db.collection('ilanlar').add(this.formData).then(t => {
-          this.$router.push('/');
-        }).catch(err=>console.log(err)); */
       }
     }
 }

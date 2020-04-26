@@ -48,6 +48,7 @@ body {
 }
 ul, li {
   list-style: none;
+  padding-inline-start: 0;
 }
 a {
   cursor: pointer;

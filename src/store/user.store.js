@@ -18,7 +18,7 @@ const userStore = {
         async profileData({ commit }, userId) {
             if(userId)
                 await db.collection('kullanicilar').doc(userId).get().then((userData) => {
-                    commit('setProfileData', userData);
+                    commit('setProfileData', userData.data());
                     return userData;
                 });
             else null;
@@ -30,6 +30,9 @@ const userStore = {
                 return profileData;
             });
         },
+        async getOneProfileData({}, userId){
+            return await db.collection('kullanicilar').doc(userId).get();
+        }
     }
 };
 
